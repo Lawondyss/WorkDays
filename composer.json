@@ -1,0 +1,23 @@
+{
+  "name": "lawondyss/work-days",
+  "description": "Library for counting work days between two dates.",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Ladislav Vondráček",
+      "email": "lad.von@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "johngrogg/ics-parser": "^2"
+  },
+  "require-dev": {
+    "tracy/tracy": "^2.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "WorkDays\\": "src/WorkDays"
+    }
+  }
+}
