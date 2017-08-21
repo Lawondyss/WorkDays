@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": ">=7.0",
-    "johngrogg/ics-parser": "^2"
+    "johngrogg/ics-parser": "^2",
+    "myclabs/php-enum": "^1.5"
   },
   "require-dev": {
     "tracy/tracy": "^2.4"
