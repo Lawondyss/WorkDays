@@ -8,6 +8,7 @@ namespace WorkDays;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\SmartObject;
+use Nette\Utils\DateTime;
 use WorkDays\Enum\WeekdaysEnum;
 
 class Calculator
@@ -16,6 +17,9 @@ class Calculator
 
   /** @var array */
   private $ignoredWeekdays = [];
+
+  /** @var array */
+  private $ignoredDates = [];
 
   /** @var Loader */
   private $loader;
@@ -58,6 +62,38 @@ class Calculator
 
 
   /**
+   * @param string|\DateTimeInterface $date
+   * @return Calculator
+   */
+  public function addIgnoredDate($date): Calculator
+  {
+    if (is_string($date)) {
+      $date = DateTime::from($date);
+    }
+    $date = $date->format('Y-m-d');
+    $this->ignoredDates[$date] = $date;
+
+    return $this;
+  }
+
+
+  /**
+   * @param string|\DateTimeInterface $date
+   * @return Calculator
+   */
+  public function removeIgnoredDate($date): Calculator
+  {
+    if (is_string($date)) {
+      $date = DateTime::from($date);
+    }
+    $date = $date->format('Y-m-d');
+    unset($this->ignoredDates[$date]);
+
+    return $this;
+  }
+
+
+  /**
    * @param \DateTimeInterface $dateStart
    * @param \DateTimeInterface $dateEnd
    * @param array ...$countries
@@ -94,7 +130,7 @@ class Calculator
 
     do {
       $finalDate = $finalDate->modify('+1 day');
-      if (!$this->isIgnoredWeekday($finalDate) && !$this->isHoliday($finalDate, $countries)) {
+      if (!$this->isIgnoredWeekday($finalDate) && !$this->isIgnoredDate($finalDate) && !$this->isHoliday($finalDate, $countries)) {
         $countWorkDays++;
       }
     } while ($countWorkDays < $workDays);
@@ -115,7 +151,7 @@ class Calculator
     $interval = $dateEnd->diff($dateStart);
     for ($i = 0; $i <= $interval->days; $i++) {
       $modifiedDate = $date->modify(sprintf('+%d day', $i));
-      if ($this->isIgnoredWeekday($modifiedDate)) {
+      if ($this->isIgnoredWeekday($modifiedDate) || $this->isIgnoredDate($modifiedDate)) {
         continue;
       }
       $range[] = $modifiedDate->format('Y-m-d');
@@ -132,6 +168,16 @@ class Calculator
   private function isIgnoredWeekday(\DateTimeInterface $date): bool
   {
     return in_array($date->format('N'), $this->ignoredWeekdays);
+  }
+
+
+  /**
+   * @param \DateTimeInterface $date
+   * @return bool
+   */
+  private function isIgnoredDate(\DateTimeInterface $date): bool
+  {
+    return in_array($date->format('Y-m-d'), $this->ignoredDates);
   }
 
 
