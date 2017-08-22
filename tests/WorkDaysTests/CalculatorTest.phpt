@@ -62,6 +62,15 @@ class CalculatorTest extends Tester\TestCase
     $result = $calculator->countEndDate($dateStart, 3, CountriesEnumMock::TEST());
     Assert::equal(new \DateTimeImmutable('2017-08-23'), $result);
   }
+
+
+  public function testCountEndDate_exception()
+  {
+    Assert::exception(function() {
+      $calculator = new WorkDays\Calculator(new LoaderMock, new Nette\Caching\Storages\DevNullStorage);
+      $calculator->countEndDate(new \DateTime, 0, CountriesEnumMock::TEST());
+    }, WorkDays\InvalidArgumentException::class);
+  }
 }
 
 
