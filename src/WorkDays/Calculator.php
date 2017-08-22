@@ -84,21 +84,22 @@ class Calculator
       throw new InvalidArgumentException(sprintf('Count of workdays must be greater then zero, "%s" given', $workDays));
     }
 
-    $dateEnd = (new \DateTimeImmutable($dateStart->format('Y-m-d')))->modify(sprintf('+%d days', $workDays));
+    $finalDate = (new \DateTimeImmutable($dateStart->format('Y-m-d')))->modify(sprintf('+%d days', $workDays));
 
-    $countWorkDays = call_user_func_array([$this, 'countWorkDays'], [$dateStart, $dateEnd] + $countries);
+    $countWorkDays = call_user_func_array([$this, 'countWorkDays'], [$dateStart, $finalDate] + $countries);
+    $countWorkDays--; // -1 because for counting final date not use first work day, is starting day
     if ($countWorkDays == $workDays) {
-      return $dateEnd;
+      return $finalDate;
     }
 
-    for ($i = 1; $countWorkDays < $workDays; $i++) {
-      $date = $dateEnd->modify(sprintf('+%d days', $i));
-      if (!$this->isIgnoredWeekday($date) && !$this->isHoliday($date, $countries)) {
+    do {
+      $finalDate = $finalDate->modify('+1 day');
+      if (!$this->isIgnoredWeekday($finalDate) && !$this->isHoliday($finalDate, $countries)) {
         $countWorkDays++;
       }
-    }
+    } while ($countWorkDays < $workDays);
 
-    return $date;
+    return $finalDate;
   }
 
 
