@@ -7,7 +7,10 @@ namespace WorkDaysTests;
 
 use WorkDays;
 
-class CountriesEnumMock extends WorkDays\CountriesEnum
+/**
+ * @method static $this TEST()
+ */
+class CountriesEnumMock extends WorkDays\Enum\CountriesEnum
 {
   const TEST = __DIR__ . '/test.ics';
 }

@@ -8,13 +8,14 @@ namespace WorkDays;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\SmartObject;
+use WorkDays\Enum\WeekdaysEnum;
 
 class Calculator
 {
   use SmartObject;
 
-  /** @var array 1 for Monday, 2 for Tuesday ... 7 for Sunday */
-  public $ignoredWeekdays = [6, 7];
+  /** @var array */
+  private $ignoredWeekdays = [];
 
   /** @var Loader */
   private $loader;
@@ -27,6 +28,32 @@ class Calculator
   {
     $this->loader = $loader;
     $this->cache = new Cache($cacheStorage, __CLASS__);
+    $this->addIgnoredWeekday(WeekdaysEnum::SATURDAY())
+         ->addIgnoredWeekday(WeekdaysEnum::SUNDAY());
+  }
+
+
+  /**
+   * @param WeekdaysEnum $weekday
+   * @return Calculator
+   */
+  public function addIgnoredWeekday(WeekdaysEnum $weekday): Calculator
+  {
+    $this->ignoredWeekdays[$weekday->getKey()] = $weekday->getValue();
+
+    return $this;
+  }
+
+
+  /**
+   * @param WeekdaysEnum $weekday
+   * @return Calculator
+   */
+  public function removeIgnoredWeekday(WeekdaysEnum $weekday): Calculator
+  {
+    unset($this->ignoredWeekdays[$weekday->getKey()]);
+
+    return $this;
   }
 
 

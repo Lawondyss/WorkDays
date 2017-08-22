@@ -3,7 +3,13 @@
  * Sources of holidays calendars is from URL https://www.mozilla.org/en-US/projects/calendar/holidays/
  *
  * @author Ladislav Vondráček <lad.von@gmail.com>
- *
+ */
+
+namespace WorkDays\Enum;
+
+use MyCLabs\Enum\Enum;
+
+/** *
  * @method static $this ALGERIA()
  * @method static $this AUSTRIA()
  * @method static $this BELGIUM()
@@ -42,11 +48,6 @@
  * @method static $this UKRAINE()
  * @method static $this URUGUAY()
  */
-
-namespace WorkDays;
-
-use MyCLabs\Enum\Enum;
-
 class CountriesEnum extends Enum
 {
   const ALGERIA = 'https://www.mozilla.org/media/caldata/AlgeriaHolidays.ics';
