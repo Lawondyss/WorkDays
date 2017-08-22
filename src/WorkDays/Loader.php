@@ -57,7 +57,7 @@ class Loader
       $dateEnd = $this->createDateTimeFromEventDate($event->dtend);
       $interval = $dateEnd->diff($dateStart);
       for ($i = 0; $i < $interval->days; $i++) {
-        $date = $dateStart->modify('+' . $i . 'day');
+        $date = $dateStart->modify(sprintf('+%d day', $i));
         $holidays[$date->format('Y-m-d')] = $event->summary;
       }
     }

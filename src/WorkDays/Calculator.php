@@ -87,7 +87,7 @@ class Calculator
     $finalDate = (new \DateTimeImmutable($dateStart->format('Y-m-d')))->modify(sprintf('+%d days', $workDays));
 
     $countWorkDays = call_user_func_array([$this, 'countWorkDays'], [$dateStart, $finalDate] + $countries);
-    $countWorkDays--; // -1 because for counting final date not use first work day, is starting day
+    $countWorkDays--; // -1 because for counting final date not use first work day, its starting day
     if ($countWorkDays == $workDays) {
       return $finalDate;
     }
@@ -114,7 +114,7 @@ class Calculator
     $date = new \DateTimeImmutable($dateStart->format('Y-m-d'));
     $interval = $dateEnd->diff($dateStart);
     for ($i = 0; $i <= $interval->days; $i++) {
-      $modifiedDate = $date->modify('+' . $i . 'day');
+      $modifiedDate = $date->modify(sprintf('+%d day', $i));
       if ($this->isIgnoredWeekday($modifiedDate)) {
         continue;
       }
