@@ -16,7 +16,8 @@
     "nette/utils": "^2.4"
   },
   "require-dev": {
-    "tracy/tracy": "^2.4"
+    "tracy/tracy": "^2.4",
+    "nette/tester": "^2.0"
   },
   "autoload": {
     "psr-4": {
@@ -24,6 +25,14 @@
     },
     "classmap": [
       "src/WorkDays/exceptions.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WorkDaysTests\\": "tests/WorkDaysTests"
+    },
+    "classmap": [
+      "tests/WorkDaysTests/data"
     ]
   }
 }
