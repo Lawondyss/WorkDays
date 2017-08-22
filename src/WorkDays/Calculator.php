@@ -102,7 +102,7 @@ class Calculator
   public function countWorkDays(\DateTimeInterface $dateStart, \DateTimeInterface $dateEnd, ...$countries): int
   {
     $dates = $this->getWorkDates($dateStart, $dateEnd);
-    $dates = $this->unsetHolidays($dates, $countries);
+    $dates = $this->removeHolidays($dates, $countries);
 
     return count($dates);
   }
@@ -206,7 +206,7 @@ class Calculator
    * @param array $countries
    * @return array
    */
-  private function unsetHolidays(array $dates, array $countries): array
+  private function removeHolidays(array $dates, array $countries): array
   {
     foreach ($dates as $key => $date) {
       $date = new \DateTimeImmutable($date);
