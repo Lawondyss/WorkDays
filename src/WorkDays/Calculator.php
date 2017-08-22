@@ -85,7 +85,7 @@ class Calculator
     $range = [];
     $date = new \DateTimeImmutable($dateStart->format('Y-m-d'));
     $interval = $dateEnd->diff($dateStart);
-    for ($i = 0; $i < $interval->days; $i++) {
+    for ($i = 0; $i <= $interval->days; $i++) {
       $modifiedDate = $date->modify('+' . $i . 'day');
       if ($this->isIgnoredWeekday($modifiedDate)) {
         continue;
