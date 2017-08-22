@@ -10,6 +10,7 @@ use ICal\ICal;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\SmartObject;
+use WorkDays\Enum\CountriesEnum;
 
 class Loader
 {
