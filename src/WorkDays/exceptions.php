@@ -13,3 +13,8 @@ interface Exception
 class InvalidDateTimeFormatException extends \DomainException implements Exception
 {
 }
+
+
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
+{
+}
